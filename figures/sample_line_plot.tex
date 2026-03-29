@@ -1,0 +1,111 @@
+% sample_line_plot.tex — Performance vs SNR (semilog y-axis)
+%
+% Dimensions: 7cm x 5.5cm (IEEE single-column width, golden-ratio height)
+% Usage: \input{figures/sample_line_plot}
+
+\begin{tikzpicture}
+  \begin{semilogyaxis}[
+    width=7cm,
+    height=5.5cm,
+    %
+    % --- Axis labels ---
+    xlabel={SNR [dB]},
+    ylabel={MSE},
+    %
+    % --- Axis range ---
+    xmin=0, xmax=20,
+    ymin=1e-4, ymax=1,
+    %
+    % --- Ticks ---
+    xtick={0, 5, 10, 15, 20},
+    ytick={1e-4, 1e-3, 1e-2, 1e-1, 1},
+    yticklabels={$10^{-4}$, $10^{-3}$, $10^{-2}$, $10^{-1}$, $1$},
+    %
+    % --- Grid ---
+    grid=both,
+    minor grid style={opacity=0.25},
+    major grid style={opacity=0.5},
+    %
+    % --- Legend ---
+    legend style={
+      at={(0.97,0.97)},
+      anchor=north east,
+      rounded corners=4pt,
+      font=\footnotesize,
+      cells={anchor=west},
+      draw=black,
+      fill=white,
+    },
+  ]
+
+  % --- Curve 1: Algorithm A (solid, blue, circle marks) ---
+  \addplot[
+    color=mycolor2,
+    solid,
+    line width=1.5pt,
+    mark=o,
+    mark size=2pt,
+    mark options={solid},
+  ]
+  table[row sep=crcr]{%
+    0   0.5012\\
+    2   0.2512\\
+    4   0.1259\\
+    6   0.0631\\
+    8   0.0316\\
+    10  0.0158\\
+    12  0.0079\\
+    14  0.0040\\
+    16  0.0020\\
+    18  0.0010\\
+    20  0.0005\\
+  };
+  \addlegendentry{Algorithm A}
+
+  % --- Curve 2: Algorithm B (solid, red, triangle marks) ---
+  \addplot[
+    color=mycolor1,
+    solid,
+    line width=1.5pt,
+    mark=triangle,
+    mark size=2.5pt,
+    mark options={solid},
+  ]
+  table[row sep=crcr]{%
+    0   0.6310\\
+    2   0.3981\\
+    4   0.2512\\
+    6   0.1585\\
+    8   0.1000\\
+    10  0.0631\\
+    12  0.0398\\
+    14  0.0251\\
+    16  0.0158\\
+    18  0.0100\\
+    20  0.0063\\
+  };
+  \addlegendentry{Algorithm B}
+
+  % --- Curve 3: Lower bound (dashed, gray, no marks) ---
+  \addplot[
+    color=gray,
+    dashed,
+    line width=1.2pt,
+  ]
+  table[row sep=crcr]{%
+    0   0.3981\\
+    2   0.1585\\
+    4   0.0631\\
+    6   0.0251\\
+    8   0.0100\\
+    10  0.0040\\
+    12  0.0016\\
+    14  0.0006\\
+    16  0.0003\\
+    18  0.0001\\
+    20  0.00005\\
+  };
+  \addlegendentry{Lower bound}
+
+  \end{semilogyaxis}
+\end{tikzpicture}

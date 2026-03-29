@@ -1,0 +1,85 @@
+% sample_bar_chart.tex — Grouped bar chart
+%
+% Dimensions: 7cm x 5.5cm (IEEE single-column width, golden-ratio height)
+% Usage: \input{figures/sample_bar_chart}
+
+\begin{tikzpicture}
+  \begin{axis}[
+    width=7cm,
+    height=5.5cm,
+    %
+    % --- Bar configuration ---
+    ybar,
+    bar width=6pt,
+    enlarge x limits=0.15,
+    %
+    % --- Axis labels ---
+    xlabel={Configuration},
+    ylabel={Runtime [sec]},
+    %
+    % --- Axis range ---
+    ymin=0,
+    %
+    % --- Ticks ---
+    symbolic x coords={$n{=}128$, $n{=}256$, $n{=}512$, $n{=}1024$},
+    xtick=data,
+    %
+    % --- Grid ---
+    ymajorgrids,
+    major grid style={opacity=0.5},
+    %
+    % --- Legend ---
+    legend style={
+      at={(0.03,0.97)},
+      anchor=north west,
+      rounded corners=4pt,
+      font=\footnotesize,
+      cells={anchor=west},
+      draw=black,
+      fill=white,
+      column sep=5pt,
+    },
+    legend columns=2,
+  ]
+
+  % --- Group 1: Method A (blue) ---
+  \addplot[
+    fill=mycolor2,
+    draw=mycolor2!80!black,
+  ]
+  coordinates {
+    ($n{=}128$, 0.12)
+    ($n{=}256$, 0.45)
+    ($n{=}512$, 1.80)
+    ($n{=}1024$, 7.20)
+  };
+  \addlegendentry{Method A}
+
+  % --- Group 2: Method B (red) ---
+  \addplot[
+    fill=mycolor1,
+    draw=mycolor1!80!black,
+  ]
+  coordinates {
+    ($n{=}128$, 0.08)
+    ($n{=}256$, 0.30)
+    ($n{=}512$, 1.20)
+    ($n{=}1024$, 4.80)
+  };
+  \addlegendentry{Method B}
+
+  % --- Group 3: Method C (green) ---
+  \addplot[
+    fill=mycolor3,
+    draw=mycolor3!80!black,
+  ]
+  coordinates {
+    ($n{=}128$, 0.18)
+    ($n{=}256$, 0.65)
+    ($n{=}512$, 2.50)
+    ($n{=}1024$, 10.10)
+  };
+  \addlegendentry{Method C}
+
+  \end{axis}
+\end{tikzpicture}

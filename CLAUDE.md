@@ -1,0 +1,102 @@
+# Canonical Academic Article Template
+
+## Paper Metadata
+- Title: (set in `main.tex`)
+- Authors: (set in `main.tex`)
+- Target venue: IEEE Transactions (journal mode by default)
+- Document class: IEEEtran (journal); conference variant in `conf2026/`
+
+## Folder Hierarchy
+```
+TemplateArticle/
+├── main.tex                     # Top-level composer: inputs header, sections, footer
+├── references.bib               # Project bibliography
+├── Makefile                     # Build: make / make view / make clean
+├── .gitignore
+│
+├── templates/                   # Shared LaTeX infrastructure
+│   ├── preamble.tex             # Full macro library
+│   ├── header.tex               # \documentclass + \input preamble + \begin{document}
+│   ├── footer.tex               # \bibliographystyle + \bibliography + \end{document}
+│   ├── IEEEtran.cls             # IEEE document class
+│   ├── IEEEabrv.bib             # IEEE abbreviations
+│   └── IEEEbib.bst              # IEEE bibliography style
+│
+├── sections/                    # One .tex file per section
+│   ├── abstract.tex
+│   ├── introduction.tex
+│   ├── system_model.tex
+│   ├── main_results.tex
+│   ├── numerical_experiments.tex
+│   ├── conclusion.tex
+│   └── appendix_proofs.tex
+│
+├── figures/                     # TikZ/PGFPlots .tex files and .dat data
+│   ├── sample_line_plot.tex     # Sample: semilog-y performance plot
+│   └── sample_bar_chart.tex     # Sample: grouped bar chart
+├── output/                      # Compiled PDF + build artifacts
+│
+├── conf2026/                    # Conference proceedings (self-contained)
+│   ├── main.tex, Makefile, references.bib
+│   ├── sections/, figures/, output/
+│
+├── conf2026_slides/             # Beamer slides
+│   ├── main.tex, Makefile
+│   ├── figures/, output/
+│
+├── resources/                   # Reference papers, background material
+└── misc/                        # Scratch files, drafts
+```
+
+## Build Instructions
+```bash
+make          # Compile main.pdf to output/
+make view     # Open the PDF
+make clean    # Remove build artifacts
+```
+Conference and slides have their own Makefiles in their directories.
+
+## Notation Conventions (from preamble.tex)
+
+### Math alphabet shortcuts
+- `\mb{X}` = bold, `\mbb{X}` = blackboard, `\mc{X}` = calligraphic
+- `\ms{X}` = sans-serif, `\msc{X}` = script, `\mf{X}` = fraktur
+
+### Letter-family macros
+- **Bold lowercase**: `\av` .. `\zv` (e.g., `\xv` = **x**)
+- **Bold uppercase**: `\Av` .. `\Zv` (e.g., `\Xv` = **X**)
+- **Bold+underlined uppercase**: `\Avu` .. `\Zvu`
+- **Underlined lowercase**: `\au` .. `\zu`
+- **Underlined uppercase**: `\Au` .. `\Zu`
+- **Blackboard bold**: `\Ab` .. `\Zb` (e.g., `\Rb` = R)
+- **Calligraphic**: `\cA` .. `\cZ`
+- **Zapf Chancery**: `\pza` .. `\pzz`
+- **Bold Greek**: `\alphav` .. `\zetav`, `\Gammav` .. `\Omegav`
+
+### Core operators
+- `\expt` = E (expectation), `\indicator{...}` = 1{...}
+- `\abs{...}`, `\norm{...}`, `\argmin`, `\argmax`
+- `\snr`, `\defeq` (triangleq), `\coleq` (:=)
+- `\Pe` (error probability), `\indep` (independence)
+
+### Author notes
+- `\anote{text}` or `\anote[NAME: ]{text}` for inline comments (red)
+
+## Figure Conventions
+- Standard dimensions: **7cm wide x 5.5cm tall** (IEEE single-column width; height informed by golden ratio)
+- Place TikZ/PGFPlots source in `figures/` as `.tex` files
+- Data files for plots go in `figures/` as `.dat` files
+- Input figures via `\input{figures/figure_name}` inside a `\begin{figure}` environment
+- Two sample figures are included as starting points:
+  - `sample_line_plot.tex` — semilog-y axis (MSE vs SNR), solid colored lines with marks, dashed gray reference
+  - `sample_bar_chart.tex` — grouped bar chart (runtime vs configuration), filled bars with legend
+- Color palette (defined in preamble): `mycolor1` (red), `mycolor2` (blue), `mycolor3` (green), `mycolor4` (orange), `mycolor5` (blue alt), `mycolor6` (magenta)
+- Line width: 1.2--1.5pt for data, 1.2pt dashed for theoretical/reference curves
+- Marks: `o` (circle), `triangle`, `square`, `diamond`, `asterisk`; size 1.4--3pt
+- Grid: `grid=both`, major opacity 0.5, minor opacity 0.25
+- Legend: corner-anchored, white fill, black border, `\footnotesize`, rounded corners
+
+## Section File Conventions
+- One file per section in `sections/`
+- Each file starts with `\section{...}\label{sec:...}`
+- Appendix sections go after `\appendices` in `main.tex`
