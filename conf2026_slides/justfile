@@ -1,0 +1,42 @@
+# Build configuration
+outdir     := "output"
+latex      := "pdflatex"
+latexflags := "-interaction=nonstopmode -halt-on-error"
+main       := "main"
+open_cmd   := "open"
+
+# Print available recipes (default recipe)
+default:
+    @just --list
+
+# Print available recipes
+list:
+    @just --list
+
+# Build slides: pdflatex -> pdflatex (no bibliography)
+build:
+    mkdir -p {{outdir}}
+    TEXINPUTS=.:../templates/: {{latex}} {{latexflags}} -output-directory={{outdir}} {{main}}.tex
+    TEXINPUTS=.:../templates/: {{latex}} {{latexflags}} -output-directory={{outdir}} {{main}}.tex
+
+# Open the compiled PDF
+view: build
+    {{open_cmd}} {{outdir}}/{{main}}.pdf
+
+# Remove build artifacts
+clean:
+    rm -f {{outdir}}/{{main}}.bbl \
+          {{outdir}}/{{main}}.blg \
+          {{outdir}}/{{main}}.log \
+          {{outdir}}/{{main}}.toc \
+          {{outdir}}/{{main}}.lof \
+          {{outdir}}/{{main}}.lot \
+          {{outdir}}/{{main}}.out \
+          {{outdir}}/{{main}}.fls \
+          {{outdir}}/{{main}}.fdb_latexmk \
+          {{outdir}}/{{main}}.synctex.gz \
+          {{outdir}}/{{main}}.aux \
+          {{outdir}}/{{main}}.nav \
+          {{outdir}}/{{main}}.snm \
+          {{outdir}}/{{main}}.vrb \
+          {{outdir}}/{{main}}.pdf
