@@ -11,7 +11,7 @@
 TemplateArticle/
 ├── main.tex                     # Top-level composer: inputs header, sections, footer
 ├── references.bib               # Project bibliography
-├── Makefile                     # Build: make / make view / make clean
+├── justfile                     # Build: just / just view / just clean
 ├── .gitignore
 │
 ├── templates/                   # Shared LaTeX infrastructure
@@ -37,11 +37,11 @@ TemplateArticle/
 ├── output/                      # Compiled PDF + build artifacts
 │
 ├── conf2026/                    # Conference proceedings (self-contained)
-│   ├── main.tex, Makefile, references.bib
+│   ├── main.tex, justfile, references.bib
 │   ├── sections/, figures/, output/
 │
 ├── conf2026_slides/             # Beamer slides
-│   ├── main.tex, Makefile
+│   ├── main.tex, justfile
 │   ├── figures/, output/
 │
 ├── resources/                   # Reference papers, background material
@@ -50,11 +50,11 @@ TemplateArticle/
 
 ## Build Instructions
 ```bash
-make          # Compile main.pdf to output/
-make view     # Open the PDF
-make clean    # Remove build artifacts
+just          # Compile main.pdf to output/
+just view     # Open the PDF
+just clean    # Remove build artifacts
 ```
-Conference and slides have their own Makefiles in their directories.
+Conference and slides have their own justfiles in their directories.
 
 ## Notation Conventions (from preamble.tex)
 
