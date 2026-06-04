@@ -1,0 +1,35 @@
+# justfile template for an ingested arXiv paper.
+#
+# Copy this to `resources/arXiv-<id>v<ver>/justfile` and set `main` to the jobname
+# (the original top-level .tex base name, which the precompiled .bbl must match).
+#
+# Key points, matching the local-arXiv convention:
+#   - NO bibtex pass. arXiv ships a precompiled <main>.bbl; we copy it into output/
+#     before each pdflatex pass so \bibliography resolves against it.
+#   - templates/ holds relocated macros (.sty / commands.tex) and the .bib.
+#   - figures live in figures/ (or an existing figs/); both are on the default path.
+#   - If 00README.json says the compiler is lualatex/xelatex, change `latex` below.
+
+outdir     := "output"
+latex      := "pdflatex"
+latexflags := "-interaction=nonstopmode -halt-on-error"
+main       := "CHANGE_ME"          # jobname: original top-level .tex base name
+open_cmd   := "open"
+
+pdf := outdir / main + ".pdf"
+
+default: build
+
+# Compile using the precompiled .bbl shipped with the arXiv source.
+# templates/ holds macros and the .bib; figures/ (or figs/) holds the plots.
+build:
+    mkdir -p {{outdir}}
+    cp -f {{main}}.bbl {{outdir}}/{{main}}.bbl
+    TEXINPUTS=.:templates/: BIBINPUTS=.:templates/: BSTINPUTS=.:templates/: {{latex}} {{latexflags}} -output-directory={{outdir}} {{main}}.tex
+    TEXINPUTS=.:templates/: BIBINPUTS=.:templates/: BSTINPUTS=.:templates/: {{latex}} {{latexflags}} -output-directory={{outdir}} {{main}}.tex
+
+view: build
+    {{open_cmd}} {{pdf}}
+
+clean:
+    rm -rf {{outdir}}
