@@ -24,6 +24,9 @@ figures, a `justfile`, `CLAUDE.md` build notes, and a `SYNOPSIS.md`).
 > The paper folders are gitignored (large/binary); only this catalog is tracked, so the registry
 > travels with the repo while the sources stay local. `just resources` lists what is actually on
 > disk right now.
+>
+> This catalog is what the library **has**; [`WATCH.md`](WATCH.md) is what it **wants** — the
+> `/check-arxiv` profile that suggests relevant new papers not yet ingested.
 
 ## Papers (0)
 

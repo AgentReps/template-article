@@ -10,6 +10,10 @@ history.
 - **`LEARNINGS.md`** — the `/capture` learning-flywheel inbox (ephemeral). Created on demand the
   first time you run `/capture`; not tracked, because it is your personal backlog of
   gaps/lessons, not shared paper history. Format below.
+- **`check-arxiv-state.md`** — the `/check-arxiv` scan state: the date watermark + a
+  seen/dismissed ledger so the arXiv sweep stays incremental and never re-pitches a paper you
+  already triaged. Created on demand; per-clone, not tracked (the tracked *watch profile* lives
+  in `resources/WATCH.md`).
 - Other tools may drop working artifacts here (e.g. generated slide decks, figure experiments);
   none of it is tracked.
 
