@@ -13,6 +13,7 @@ TemplateArticle/
 ├── references.bib               # Project bibliography
 ├── justfile                     # Build: just / just view / just clean
 ├── PROGRESSION.md               # Section authoring: .tex/.md sidecar pairing + sync
+├── LEARNINGS.md                 # /capture inbox: gaps/lessons to integrate at review
 ├── .gitignore
 │
 ├── templates/                   # Shared LaTeX infrastructure
@@ -114,3 +115,9 @@ Conference and slides have their own justfiles in their directories.
   *across* the sidecars (the through-line / tree); `/format-tex` and `/format-md` keep each
   register tidy. The sync and audit skills are surgical, additive, and ask before writing.
 - Full convention and the concept-mapping rules: [`PROGRESSION.md`](PROGRESSION.md).
+
+## Continuous Improvement
+- `/capture` logs a gap/lesson/idea mid-session into [`LEARNINGS.md`](LEARNINGS.md) as a small
+  blob — one append, one-line ack, no disruption to the current task.
+- `/capture review` later triages that backlog and integrates each blob into its home (update a
+  skill, write a new one, amend a doc, add a hook, save a memory, or drop it), then archives it.
