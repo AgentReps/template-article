@@ -110,9 +110,43 @@ with a `## Decisions` or "resolved" trail recording why it reads the way it does
 
 ## Tooling
 
-- **`/md2tex`** — realize settled sidecar concepts into the shipped `.tex` prose.
-- **`/tex2md`** — feed concept changes made in the `.tex` back into the sidecar.
+- **`/md2tex`** — realize settled sidecar concepts into the shipped `.tex` prose (horizontal,
+  within one section).
+- **`/tex2md`** — feed concept changes made in the `.tex` back into the sidecar (horizontal).
+- **`/progression`** — audit the conceptual coherence of the sidecars *across* sections
+  (vertical): setup↔payoff, ordering, consistency, and branch coherence. Uses the optional
+  progression map below.
 - **`/format-tex`**, **`/format-md`** — keep each register's source tidy and diff-friendly.
+
+## Progression map (optional)
+
+By default the section order is the `\input{sections/<name>}` sequence in `main.tex`, and the
+progression is read as a **linear chain**. When the document **branches** — parallel case
+studies, an appendix that depends on a specific result, two studies that share a model but not
+each other — declare the conceptual dependency structure here as a `parent -> child` edge list.
+`/progression` reads it to build the dependency tree/DAG; omit it for a linear paper.
+
+The default linear chain (no map needed) is just:
+
+```
+introduction -> system_model -> main_results -> numerical_experiments -> conclusion
+```
+
+A branching example (trunk feeding two parallel case studies that rejoin at the conclusion):
+
+```
+# progression-map
+introduction  -> system_model
+system_model  -> main_results
+system_model  -> case_study        # branch A (depends on the model, not on B)
+system_model  -> case_study2       # branch B (parallel to A)
+main_results  -> conclusion
+case_study    -> conclusion
+case_study2   -> conclusion
+```
+
+Match the node names to the section file stems (`<name>.tex` / `<name>.md`). Keep the map in
+sync with `main.tex`; `/progression` flags a section whose `.tex` is not `\input` as parked.
 
 ## Git
 

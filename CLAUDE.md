@@ -110,6 +110,7 @@ Conference and slides have their own justfiles in their directories.
   and late in the game feed prose-driven concept changes back to the `.md`. The lead flips from
   `.md` to `.tex` over the lifecycle.
 - Tooling: `/md2tex` realizes settled sidecar concepts into the `.tex`; `/tex2md` feeds concept
-  changes from the `.tex` back into the sidecar; `/format-tex` and `/format-md` keep each
-  register tidy. Both sync skills are surgical, additive, and ask before writing.
+  changes from the `.tex` back into the sidecar; `/progression` audits conceptual coherence
+  *across* the sidecars (the through-line / tree); `/format-tex` and `/format-md` keep each
+  register tidy. The sync and audit skills are surgical, additive, and ask before writing.
 - Full convention and the concept-mapping rules: [`PROGRESSION.md`](PROGRESSION.md).
