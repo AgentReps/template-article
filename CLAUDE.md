@@ -12,6 +12,7 @@ TemplateArticle/
 ├── main.tex                     # Top-level composer: inputs header, sections, footer
 ├── references.bib               # Project bibliography
 ├── justfile                     # Build: just / just view / just clean
+├── PROGRESSION.md               # Section authoring: .tex/.md sidecar pairing + sync
 ├── .gitignore
 │
 ├── templates/                   # Shared LaTeX infrastructure
@@ -22,9 +23,9 @@ TemplateArticle/
 │   ├── IEEEabrv.bib             # IEEE abbreviations
 │   └── IEEEbib.bst              # IEEE bibliography style
 │
-├── sections/                    # One .tex file per section
-│   ├── abstract.tex
-│   ├── introduction.tex
+├── sections/                    # One .tex (shipped) + .md (sidecar) per section
+│   ├── abstract.tex             #   abstract.md, introduction.md, ... pair with each .tex
+│   ├── introduction.tex         #   .md = thinking layer (never \input; see PROGRESSION.md)
 │   ├── system_model.tex
 │   ├── main_results.tex
 │   ├── numerical_experiments.tex
@@ -100,3 +101,15 @@ Conference and slides have their own justfiles in their directories.
 - One file per section in `sections/`
 - Each file starts with `\section{...}\label{sec:...}`
 - Appendix sections go after `\appendices` in `main.tex`
+
+## Section Authoring (Sidecars)
+- Each `sections/<name>.tex` (shipped prose) is paired with a same-named `sections/<name>.md`
+  *sidecar* (the thinking layer: scratch, ideas, the conceptual spine, decisions).
+- The sidecar is **never** `\input` — invisible to the build, never in the PDF. Both are tracked.
+- A section **progresses**: think in the `.md` first, realize settled concepts into the `.tex`,
+  and late in the game feed prose-driven concept changes back to the `.md`. The lead flips from
+  `.md` to `.tex` over the lifecycle.
+- Tooling: `/md2tex` realizes settled sidecar concepts into the `.tex`; `/tex2md` feeds concept
+  changes from the `.tex` back into the sidecar; `/format-tex` and `/format-md` keep each
+  register tidy. Both sync skills are surgical, additive, and ask before writing.
+- Full convention and the concept-mapping rules: [`PROGRESSION.md`](PROGRESSION.md).
