@@ -11,9 +11,14 @@ Keep the reading-note disclaimer when the PI is **not** an author. Make the
 
 Open the file with a **YAML frontmatter block** — a lightweight provenance header for
 consistency with `diff-arxiv`'s `ANALYSIS.md`. It is paper-only: `skill: get-arxiv`,
-`arxiv: <id>v<ver>`, `doi: 10.48550/arXiv.<id>`, and `generated: <today>`. It carries **no**
-`manuscript_commit` — a summary describes the (immutable) paper, so it cannot go stale
-against the manuscript the way an analysis does.
+`arxiv: <id>v<ver>`, `doi: 10.48550/arXiv.<id>`, `generated: <today>`, plus the
+catalog-triage fields `title`, `year`, and `tags`. It carries **no** `manuscript_commit` —
+a summary describes the (immutable) paper, so it cannot go stale against the manuscript the
+way an analysis does.
+
+The header is the **source of truth** for the catalog row: `title`/`year`/`tags` here are what
+`get-arxiv` copies into `resources/CATALOG.md`. Keep `tags` to a few lowercase topic words and
+**reuse existing tags** across papers (a controlled vocabulary) so the catalog filters cleanly.
 
 ---
 
@@ -23,6 +28,9 @@ skill: get-arxiv
 arxiv: <id>v<ver>
 doi: 10.48550/arXiv.<id>
 generated: <YYYY-MM-DD>
+title: <Full Paper Title>
+year: <YYYY>
+tags: [<topic-1>, <topic-2>, <topic-3>]
 ---
 
 # <Full Paper Title>

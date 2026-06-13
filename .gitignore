@@ -30,9 +30,9 @@
 # Build output directory
 output/
 
-# Local arXiv reference library (ingested via get-arxiv) — keep only the index tracked
+# Local arXiv reference library (ingested via get-arxiv) — keep only the catalog tracked
 resources/*
-!resources/INDEX.md
+!resources/CATALOG.md
 
 # Scratch working area (ephemeral experiments, the /capture inbox, generated decks)
 # — keep only the README tracked; everything else stays local

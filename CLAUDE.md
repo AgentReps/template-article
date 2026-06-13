@@ -45,7 +45,8 @@ TemplateArticle/
 │   ├── main.tex, justfile
 │   ├── figures/, output/
 │
-├── resources/                   # Reference papers, background material
+├── resources/                   # Local arXiv library (gitignored except CATALOG.md);
+│                                #   CATALOG.md = triage layer, `just resources` lists what's on disk
 ├── scratch/                     # Ephemeral working area (gitignored except README.md);
 │                                #   /capture writes scratch/LEARNINGS.md here
 └── misc/                        # Scratch files, drafts

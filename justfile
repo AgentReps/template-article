@@ -40,3 +40,27 @@ clean:
           {{outdir}}/{{main}}.synctex.gz \
           {{outdir}}/{{main}}.aux \
           {{outdir}}/{{main}}.pdf
+
+# List the papers in the local arXiv library (resources/)
+resources:
+    #!/usr/bin/env bash
+    shopt -s nullglob
+    dirs=(resources/arXiv-*/)
+    if [ ${#dirs[@]} -eq 0 ]; then
+        echo "No papers in resources/ yet — ingest one with the get-arxiv skill."
+        exit 0
+    fi
+    echo "Local arXiv library — ${#dirs[@]} paper(s):"
+    for d in "${dirs[@]}"; do
+        s="${d}SUMMARY.md"
+        title=$(sed -n 's/^title:[[:space:]]*//p' "$s" 2>/dev/null | head -1)
+        if [ -z "$title" ]; then
+            title=$(sed -n 's/^# //p' "$s" 2>/dev/null | head -1)
+        fi
+        if [ -z "$title" ]; then
+            title="(no SUMMARY.md)"
+        fi
+        id=$(basename "$d")
+        printf '  %-22s %s\n' "${id#arXiv-}" "$title"
+    done
+    echo "(roles & tags: resources/CATALOG.md)"

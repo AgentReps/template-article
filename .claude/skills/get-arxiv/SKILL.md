@@ -72,14 +72,22 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 
 6. **Write `SUMMARY.md`** from [references/SUMMARY-template.md](references/SUMMARY-template.md).
    Open with the YAML provenance header (`skill: get-arxiv`, `arxiv`, `doi`, `generated` =
-   today) — paper-only, no `manuscript_commit` (a summary can't go stale against the
-   manuscript). Pull title/authors/abstract from the arXiv Atom API
+   today, plus `title`, `year`, `tags`) — paper-only, no `manuscript_commit` (a summary can't
+   go stale against the manuscript). The `title`/`year`/`tags` fields are the source of truth
+   for the catalog row (step 7); keep `tags` to a few lowercase topic words, reusing existing
+   tags across papers. Pull title/authors/abstract from the arXiv Atom API
    (`http://export.arxiv.org/api/query?id_list=<id>`) for accuracy. Add the DOI
    (`10.48550/arXiv.<id>`), key contributions, technical ingredients, numerical takeaways,
    and a **Relevance to the manuscript** section with concrete "Citable as:" pointers into
    the user's `sections/*.tex`.
 
-7. **Verify & report.** Run `just` in the new folder to confirm it compiles. List the
+7. **Update the catalog.** Add a row to `resources/CATALOG.md` (the tracked triage layer):
+   `Folder | arXiv | Title | Year | Tags | Role`, copying `title`/`year`/`tags` from the
+   `SUMMARY.md` header and writing a one-line role. Keep the row **lean** — depth lives in
+   `SUMMARY.md`, never duplicated here. Bump the `## Papers (N)` count. If a row for this id
+   already exists, update it in place.
+
+8. **Verify & report.** Run `just` in the new folder to confirm it compiles. List the
    produced layout and flag anomalies: no `00README.json`, monolithic source, missing
    `.bbl`, or a multi-paper tarball.
 
@@ -92,6 +100,7 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 | Top-level `.tex` | `00README.json` → `usage:"toplevel"`; else the file with `\documentclass` |
 | DOI | `10.48550/arXiv.<id>` |
 | Metadata API | `http://export.arxiv.org/api/query?id_list=<id>` |
+| Catalog | add a lean row to `resources/CATALOG.md` (`title`/`year`/`tags` from the SUMMARY header) |
 | **Keep** | original-named top-level `.tex` + `.bbl`, `\input` section files, **referenced** figures, `.sty`/macros/`.bib` (→ `templates/`), `00README.json` |
 | **Delete** | unused figures, and paper build cruft (`.log .aux .out .toc .synctex* .pdf`) |
 | **Never** | rename the top-level `.tex`, run `bibtex`, reconstruct `.bib` from `.bbl`, or reword prose |
