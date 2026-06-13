@@ -71,7 +71,9 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
    Paper Metadata, Top-Level Files, Local Deviations from `TemplateArticle/`, Build.
 
 6. **Write `SUMMARY.md`** from [references/SUMMARY-template.md](references/SUMMARY-template.md).
-   Pull title/authors/abstract from the arXiv Atom API
+   Open with the YAML provenance header (`skill: get-arxiv`, `arxiv`, `doi`, `generated` =
+   today) — paper-only, no `manuscript_commit` (a summary can't go stale against the
+   manuscript). Pull title/authors/abstract from the arXiv Atom API
    (`http://export.arxiv.org/api/query?id_list=<id>`) for accuracy. Add the DOI
    (`10.48550/arXiv.<id>`), key contributions, technical ingredients, numerical takeaways,
    and a **Relevance to the manuscript** section with concrete "Citable as:" pointers into

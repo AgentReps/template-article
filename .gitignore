@@ -30,6 +30,13 @@
 # Build output directory
 output/
 
+# Local arXiv reference library (ingested via get-arxiv) — keep only the index tracked
+resources/*
+!resources/INDEX.md
+
+# Scratch working area (throwaway experiments, generated slide decks, etc.)
+scratch/
+
 # Editor files
 .DS_Store
 *.swp

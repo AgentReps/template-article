@@ -12,6 +12,14 @@
 \usepackage{accents,latexsym,cancel}
 \usepackage{cite}
 
+% ---- Tables and code ----
+\usepackage{url}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{listings}
+
 \let\labelindent\relax
 \usepackage{enumitem}
 \usepackage[dvipsnames]{xcolor}
@@ -436,3 +444,23 @@ decorations.pathmorphing,
     \setlength{\topsep}{0in}
    }}
 {\end{list}}
+
+% ---- Code listings (restrained Python style) ----
+\lstdefinestyle{mycode}{%
+  language=Python,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color{mycolor2}\bfseries,
+  commentstyle=\color{black!50}\itshape,
+  stringstyle=\color{mycolor3},
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=tb,
+  framerule=0.6pt,
+  rulecolor=\color{black!30},
+  aboveskip=4pt,
+  belowskip=2pt,
+  xleftmargin=2pt,
+}
+\lstset{style=mycode}

@@ -9,9 +9,22 @@ tone and depth on `~/ClaudeAMP/arXiv-2402.08676v1/SUMMARY.md`.
 Keep the reading-note disclaimer when the PI is **not** an author. Make the
 "Relevance to the manuscript" section concrete — point at real `sections/*.tex` files.
 
+Open the file with a **YAML frontmatter block** — a lightweight provenance header for
+consistency with `diff-arxiv`'s `ANALYSIS.md`. It is paper-only: `skill: get-arxiv`,
+`arxiv: <id>v<ver>`, `doi: 10.48550/arXiv.<id>`, and `generated: <today>`. It carries **no**
+`manuscript_commit` — a summary describes the (immutable) paper, so it cannot go stale
+against the manuscript the way an analysis does.
+
 ---
 
 ```markdown
+---
+skill: get-arxiv
+arxiv: <id>v<ver>
+doi: 10.48550/arXiv.<id>
+generated: <YYYY-MM-DD>
+---
+
 # <Full Paper Title>
 
 **Authors:** <Name (affiliation), Name (affiliation), ...>
