@@ -52,13 +52,13 @@ resources:
     fi
     echo "Local arXiv library — ${#dirs[@]} paper(s):"
     for d in "${dirs[@]}"; do
-        s="${d}SUMMARY.md"
+        s="${d}SYNOPSIS.md"
         title=$(sed -n 's/^title:[[:space:]]*//p' "$s" 2>/dev/null | head -1)
         if [ -z "$title" ]; then
             title=$(sed -n 's/^# //p' "$s" 2>/dev/null | head -1)
         fi
         if [ -z "$title" ]; then
-            title="(no SUMMARY.md)"
+            title="(no SYNOPSIS.md)"
         fi
         id=$(basename "$d")
         printf '  %-22s %s\n' "${id#arXiv-}" "$title"

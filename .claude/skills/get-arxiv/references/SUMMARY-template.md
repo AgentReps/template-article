@@ -1,6 +1,6 @@
-# SUMMARY.md template — discovery reading note
+# SYNOPSIS.md template — discovery reading note
 
-Fill this in and write it as `SUMMARY.md` at the root of `resources/arXiv-<id>v<ver>/`.
+Fill this in and write it as `SYNOPSIS.md` at the root of `resources/arXiv-<id>v<ver>/`.
 The purpose is **discovery**: a future agent (or the PI) reads this to decide whether and how
 the paper is relevant to the manuscript in progress. Pull title/authors/abstract from the
 arXiv Atom API (`http://export.arxiv.org/api/query?id_list=<id>`) for accuracy. Model the

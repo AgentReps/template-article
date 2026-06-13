@@ -82,7 +82,7 @@ resources/arXiv-<id>v<ver>/
 ├── output/                # build dir (created by justfile)
 ├── justfile               # bbl-copy build, no bibtex
 ├── CLAUDE.md              # local build notes
-└── SUMMARY.md             # discovery reading note
+└── SYNOPSIS.md            # discovery reading note
 ```
 
 ### Keep vs delete
@@ -94,7 +94,7 @@ resources/arXiv-<id>v<ver>/
 - **Relocate:** `.sty`/macros + `.bib` → `templates/`; loose root figures → `figures/`
   (then fix their `\includegraphics` paths). Leave an existing `figs/` where it is.
 
-## Metadata for `SUMMARY.md` / `CLAUDE.md`
+## Metadata for `SYNOPSIS.md` / `CLAUDE.md`
 
 - **arXiv Atom API:** `http://export.arxiv.org/api/query?id_list=<id>` → returns an Atom
   feed with `<title>`, `<author><name>`, `<summary>` (abstract), and often `<arxiv:doi>` /

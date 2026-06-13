@@ -1,6 +1,6 @@
 ---
 name: get-arxiv
-description: Ingest an arXiv paper's LaTeX source into the local arXiv library under resources/, reshaped into a self-contained mini-project that mirrors this repo's TemplateArticle layout (original top-level .tex kept for jobname/.bbl coupling, macros and .bib moved to templates/, figures kept in figures/, plus a tailored justfile, CLAUDE.md build notes, and a discovery SUMMARY.md). Use when the user asks to "ingest an arXiv paper", "download arXiv source", "add 2402.08676 to my library/resources", "build my local arXiv", or "write a SUMMARY for a paper". Fetches and reshapes one paper per run; keeps referenced figures and the shipped .bbl, deletes only unused figures and build cruft.
+description: Ingest an arXiv paper's LaTeX source into the local arXiv library under resources/, reshaped into a self-contained mini-project that mirrors this repo's TemplateArticle layout (original top-level .tex kept for jobname/.bbl coupling, macros and .bib moved to templates/, figures kept in figures/, plus a tailored justfile, CLAUDE.md build notes, and a discovery SYNOPSIS.md). Use when the user asks to "ingest an arXiv paper", "download arXiv source", "add 2402.08676 to my library/resources", "build my local arXiv", or "write a synopsis (reading note) for a paper". Fetches and reshapes one paper per run; keeps referenced figures and the shipped .bbl, deletes only unused figures and build cruft.
 ---
 
 # Ingest an arXiv Source into the Local Library
@@ -12,7 +12,7 @@ reshapes it into a **self-contained mini-`TemplateArticle`** under
 `resources/arXiv-<id>v<ver>/` — so the agent can read it, build it locally, and cite
 it while drafting. The result mirrors this repo's own layout: the original top-level
 `.tex` at root, macros and `.bib` in `templates/`, figures in `figures/`, plus a
-`justfile`, `CLAUDE.md` build notes, and a discovery `SUMMARY.md`.
+`justfile`, `CLAUDE.md` build notes, and a discovery `SYNOPSIS.md`.
 
 This is **not** a verbatim dump. It relocates files, fixes figure paths, emits a build
 harness, and writes two human/agent-facing docs. It does **not** rewrite the paper's
@@ -22,7 +22,7 @@ prose, run `bibtex`, or reconstruct a `.bib` from a `.bbl`.
 
 - The user wants to add a paper to the local arXiv library (`resources/`).
 - The user mentions an arXiv ID and "ingest", "download source", or "local arxiv".
-- The user asks for a `SUMMARY.md` / reading note for a downloaded paper.
+- The user asks for a `SYNOPSIS.md` / reading note for a downloaded paper.
 
 One paper per invocation. For a batch, run the workflow once per ID.
 
@@ -70,7 +70,7 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 5. **Write `CLAUDE.md`** from [references/CLAUDE-template.md](references/CLAUDE-template.md):
    Paper Metadata, Top-Level Files, Local Deviations from `TemplateArticle/`, Build.
 
-6. **Write `SUMMARY.md`** from [references/SUMMARY-template.md](references/SUMMARY-template.md).
+6. **Write `SYNOPSIS.md`** from [references/SUMMARY-template.md](references/SUMMARY-template.md).
    Open with the YAML provenance header (`skill: get-arxiv`, `arxiv`, `doi`, `generated` =
    today, plus `title`, `year`, `tags`) — paper-only, no `manuscript_commit` (a summary can't
    go stale against the manuscript). The `title`/`year`/`tags` fields are the source of truth
@@ -83,8 +83,8 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 
 7. **Update the catalog.** Add a row to `resources/CATALOG.md` (the tracked triage layer):
    `Folder | arXiv | Title | Year | Tags | Role`, copying `title`/`year`/`tags` from the
-   `SUMMARY.md` header and writing a one-line role. Keep the row **lean** — depth lives in
-   `SUMMARY.md`, never duplicated here. Bump the `## Papers (N)` count. If a row for this id
+   `SYNOPSIS.md` header and writing a one-line role. Keep the row **lean** — depth lives in
+   `SYNOPSIS.md`, never duplicated here. Bump the `## Papers (N)` count. If a row for this id
    already exists, update it in place.
 
 8. **Verify & report.** Run `just` in the new folder to confirm it compiles. List the
@@ -100,7 +100,7 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 | Top-level `.tex` | `00README.json` → `usage:"toplevel"`; else the file with `\documentclass` |
 | DOI | `10.48550/arXiv.<id>` |
 | Metadata API | `http://export.arxiv.org/api/query?id_list=<id>` |
-| Catalog | add a lean row to `resources/CATALOG.md` (`title`/`year`/`tags` from the SUMMARY header) |
+| Catalog | add a lean row to `resources/CATALOG.md` (`title`/`year`/`tags` from the SYNOPSIS.md header) |
 | **Keep** | original-named top-level `.tex` + `.bbl`, `\input` section files, **referenced** figures, `.sty`/macros/`.bib` (→ `templates/`), `00README.json` |
 | **Delete** | unused figures, and paper build cruft (`.log .aux .out .toc .synctex* .pdf`) |
 | **Never** | rename the top-level `.tex`, run `bibtex`, reconstruct `.bib` from `.bbl`, or reword prose |
