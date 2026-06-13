@@ -13,7 +13,6 @@ TemplateArticle/
 ├── references.bib               # Project bibliography
 ├── justfile                     # Build: just / just view / just clean
 ├── PROGRESSION.md               # Section authoring: .tex/.md sidecar pairing + sync
-├── LEARNINGS.md                 # /capture inbox: gaps/lessons to integrate at review
 ├── .gitignore
 │
 ├── templates/                   # Shared LaTeX infrastructure
@@ -47,6 +46,8 @@ TemplateArticle/
 │   ├── figures/, output/
 │
 ├── resources/                   # Reference papers, background material
+├── scratch/                     # Ephemeral working area (gitignored except README.md);
+│                                #   /capture writes scratch/LEARNINGS.md here
 └── misc/                        # Scratch files, drafts
 ```
 
@@ -117,7 +118,9 @@ Conference and slides have their own justfiles in their directories.
 - Full convention and the concept-mapping rules: [`PROGRESSION.md`](PROGRESSION.md).
 
 ## Continuous Improvement
-- `/capture` logs a gap/lesson/idea mid-session into [`LEARNINGS.md`](LEARNINGS.md) as a small
-  blob — one append, one-line ack, no disruption to the current task.
+- `/capture` logs a gap/lesson/idea mid-session into `scratch/LEARNINGS.md` as a small blob —
+  one append, one-line ack, no disruption to the current task. The inbox is ephemeral
+  (gitignored); the scratch area and entry format are documented in
+  [`scratch/README.md`](scratch/README.md).
 - `/capture review` later triages that backlog and integrates each blob into its home (update a
   skill, write a new one, amend a doc, add a hook, save a memory, or drop it), then archives it.

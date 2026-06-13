@@ -1,7 +1,8 @@
 # capture — Review Taxonomy & Integration Playbook
 
-This is the REVIEW half of the `/capture` flywheel: turn the `LEARNINGS.md` backlog into durable
-changes to the toolkit. Read the inbox format in [LEARNINGS.md](../../../../LEARNINGS.md) first.
+This is the REVIEW half of the `/capture` flywheel: turn the `scratch/LEARNINGS.md` backlog into
+durable changes to the toolkit. Read the inbox format in
+[scratch/README.md](../../../../scratch/README.md) first.
 
 Capture is cheap and dumb on purpose; **all the judgment is here.** Review is deliberate,
 ask-first, and surgical — it edits skills, docs, config, and memory, so it follows the same

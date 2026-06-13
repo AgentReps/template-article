@@ -34,8 +34,10 @@ output/
 resources/*
 !resources/INDEX.md
 
-# Scratch working area (throwaway experiments, generated slide decks, etc.)
-scratch/
+# Scratch working area (ephemeral experiments, the /capture inbox, generated decks)
+# — keep only the README tracked; everything else stays local
+scratch/*
+!scratch/README.md
 
 # Editor files
 .DS_Store
