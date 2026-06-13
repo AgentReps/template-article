@@ -32,7 +32,7 @@ Read [references/arxiv-source-notes.md](references/arxiv-source-notes.md) — it
 download URL, the tarball→folder-name rule, the `00README.json` schema, the jobname/`.bbl`
 coupling, the metadata API, and the edge cases. The three output docs are generated from
 [references/CLAUDE-template.md](references/CLAUDE-template.md),
-[references/SUMMARY-template.md](references/SUMMARY-template.md), and
+[references/SYNOPSIS-template.md](references/SYNOPSIS-template.md), and
 [references/justfile.template](references/justfile.template). Study a real processed
 example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 
@@ -70,7 +70,7 @@ example to match the convention exactly: `~/ClaudeAMP/arXiv-2402.08676v1/`.
 5. **Write `CLAUDE.md`** from [references/CLAUDE-template.md](references/CLAUDE-template.md):
    Paper Metadata, Top-Level Files, Local Deviations from `TemplateArticle/`, Build.
 
-6. **Write `SYNOPSIS.md`** from [references/SUMMARY-template.md](references/SUMMARY-template.md).
+6. **Write `SYNOPSIS.md`** from [references/SYNOPSIS-template.md](references/SYNOPSIS-template.md).
    Open with the YAML provenance header (`skill: get-arxiv`, `arxiv`, `doi`, `generated` =
    today, plus `title`, `year`, `tags`) — paper-only, no `manuscript_commit` (a summary can't
    go stale against the manuscript). The `title`/`year`/`tags` fields are the source of truth
