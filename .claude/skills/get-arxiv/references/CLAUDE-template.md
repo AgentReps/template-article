@@ -30,8 +30,11 @@ layout. Model it on `~/ClaudeAMP/arXiv-2402.08676v1/CLAUDE.md`.
 ## Local Deviations from `TemplateArticle/`
 - <e.g. "Monolithic `.tex`; not split into `sections/*.tex`.">
 - File names kept as `<jobname>.tex` / `<jobname>.bbl` to preserve the jobname/.bbl coupling.
-- <e.g. "One loose figure (`plot_19.png`) moved into a new `figures/` directory; its
-  single `\includegraphics` reference was updated."> / <"Existing `figs/` left in place.">
+- <e.g. "One loose LaTeX-native figure (`plot_19.tex`) moved into a new `figures/`
+  directory; its single `\input` reference was updated."> / <"Existing `figs/` left in
+  place.">
+- Figures omitted: <N> non-LaTeX-native graphics commented out (grep `get-arxiv: omitted`
+  to list).   <!-- omit line if N == 0 -->
 - The justfile does not call `bibtex`; the precompiled `.bbl` is copied into `output/`
   before each `pdflatex` pass.
 

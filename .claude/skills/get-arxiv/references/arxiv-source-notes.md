@@ -78,7 +78,7 @@ resources/arXiv-<id>v<ver>/
 ├── <section>.tex ...      # \input section files kept at root (e.g. appendix.tex)
 ├── 00README.json          # arXiv manifest, as shipped (if any)
 ├── templates/             # macros (.sty, commands.tex) + .bib  — omit if nothing to move
-├── figures/  (or figs/)   # referenced figures; loose ones moved here, paths fixed
+├── figures/  (or figs/)   # LaTeX-native referenced figures (.tex/.tikz/.pgf); loose ones moved here, paths fixed
 ├── output/                # build dir (created by justfile)
 ├── justfile               # bbl-copy build, no bibtex
 ├── CLAUDE.md              # local build notes
@@ -88,11 +88,68 @@ resources/arXiv-<id>v<ver>/
 ### Keep vs delete
 
 - **Keep:** every `.tex`, the `.bbl`, `.sty`/macro files, the `.bib`, `00README.json`, and
-  every figure that is actually `\includegraphics`'d.
-- **Delete:** figures that nothing references, and paper build cruft
-  (`.log .aux .out .toc .synctex.gz`, and any stray compiled `.pdf` of the paper itself).
-- **Relocate:** `.sty`/macros + `.bib` → `templates/`; loose root figures → `figures/`
-  (then fix their `\includegraphics` paths). Leave an existing `figs/` where it is.
+  every **LaTeX-native** figure that is actually `\input`/`\includegraphics`'d
+  (`.tex`/`.tikz`/`.pgf`, plus any `.dat`/`.csv` they consume).
+- **Delete:** figures that nothing references, **every non-LaTeX-native figure binary**
+  (`.pdf`/`.png`/`.jpg`/`.jpeg`/`.eps`/`.svg`) — its `\includegraphics` call site gets
+  the figure-omission transform below — and paper build cruft (`.log .aux .out .toc
+  .synctex.gz`, and any stray compiled `.pdf` of the paper itself).
+- **Relocate:** `.sty`/macros + `.bib` → `templates/`; loose root LaTeX-native figures
+  → `figures/` (then fix their `\input`/`\includegraphics` paths). Leave an existing
+  `figs/` where it is.
+
+## Figure omission transform (non-LaTeX-native graphics)
+
+Tarballs heavy in binary figures (EPS/PDF/PNG/JPG/JPEG/SVG) burn ingest effort on paths
+the reading agent will never look at. Rule: **keep the figure float, comment out the
+`\includegraphics`, drop in a placeholder box, delete the binary.** The compiled PDF
+still shows a labelled float, body `\ref{fig:foo}` cross-references still resolve, and
+the folder stays free of orphan binaries.
+
+### Resolving each call site
+
+Walk every `.tex` in the ingest (top-level + `\input`/`\include` children). For each
+`\includegraphics[opts]{path}`:
+
+1. Resolve `path` against the unpacked tarball, honoring any `\graphicspath{...}`. If
+   no extension was written, probe in order: `.tex`, `.tikz`, `.pgf`, then `.pdf`,
+   `.png`, `.jpg`, `.jpeg`, `.eps`, `.svg`.
+2. **LaTeX-native target** (`.tex`/`.tikz`/`.pgf`): keep, relocate into `figures/`,
+   rewrite the path. Today's behavior.
+3. **Non-LaTeX-native target** (`.pdf`/`.png`/`.jpg`/`.jpeg`/`.eps`/`.svg`, or path
+   unresolvable but the written extension is in that set): apply the transform below
+   and delete the file from the ingest.
+4. **Truly unresolvable** (no extension, no probe hits): treat as non-native,
+   transform, and note the orphan reference in `CLAUDE.md` deviations.
+
+### The transform
+
+Touch only the `\includegraphics` line. Leave `\begin{figure}`, `\caption`, `\label`,
+and any surrounding code untouched.
+
+```latex
+\begin{figure}[t]
+  \centering
+  % get-arxiv: omitted figure <original-path-as-written>
+  % \includegraphics[width=.8\linewidth]{foo.pdf}
+  \fbox{\parbox{.5\linewidth}{\centering\textsf{[figure omitted in arXiv ingest]}}}
+  \caption{The system block diagram.}
+  \label{fig:system}
+\end{figure}
+```
+
+The `% get-arxiv: omitted figure <path>` line is the audit marker — one per omission,
+grep-able later with `grep -rn "get-arxiv: omitted" resources/arXiv-<id>v<ver>/`.
+
+Inside subfigure environments (`\subfloat`, `subcaption`'s `\begin{subfigure}`), the
+same per-call-site transform applies — the placeholder box just slots in where the
+`\includegraphics` was.
+
+### Counting & reporting
+
+Total omissions go into the per-paper `CLAUDE.md` under "Local Deviations" as
+`- Figures omitted: <N> non-LaTeX-native graphics commented out (grep "get-arxiv:
+omitted" to list).` Drop the line when `<N>` is zero.
 
 ## Metadata for `SYNOPSIS.md` / `CLAUDE.md`
 
@@ -115,4 +172,13 @@ resources/arXiv-<id>v<ver>/
   the manifest; flag the extras in the report.
 - **Loose unused source** (e.g. a stray `trash.tex` not `\input` anywhere) → leave it at the
   root rather than deleting; note it. (See `~/ClaudeAMP/arXiv-2402.08676v1/trash.tex`.)
-- **`\graphicspath` already set** → respect it; don't move figures out from under it.
+- **`\graphicspath` already set** → leave the directive in place; the per-call-site
+  resolution in the figure-omission transform already honors it. Don't move LaTeX-native
+  figures out from under it without rewriting the path.
+- **Subfigure macros** (`\subfloat`, `subcaption`'s `\begin{subfigure}`) → same
+  per-call-site transform; the placeholder box slots in where the `\includegraphics`
+  was, and the surrounding subfigure envelope plus its caption/label are preserved.
+- **`\input`'d wrapper that itself does `\includegraphics`** (e.g. `\input{figures/foo}`
+  where `foo.tex` calls `\includegraphics{foo.pdf}`) → recurse: keep the wrapper (it's
+  LaTeX-native), but apply the transform to its inner `\includegraphics`. The wrapper
+  stays, only the binary asset goes away.
